@@ -6,21 +6,21 @@ const PopularCompanies = () => {
   const companies = [
     {
       id: 1,
-      title: "Microsoft",
+      title: "hormuud",
       location: "Millennium City Centre, Gurugram",
       openPositions: 10,
       icon: <FaMicrosoft />,
     },
     {
       id: 2,
-      title: "Tesla",
+      title: "mizan",
       location: "Millennium City Centre, Gurugram",
       openPositions: 5,
       icon: <SiTesla />,
     },
     {
       id: 3,
-      title: "Apple",
+      title: "somtel",
       location: "Millennium City Centre, Gurugram",
       openPositions: 20,
       icon: <FaApple />,

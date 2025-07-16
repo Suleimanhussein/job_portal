@@ -1,39 +1,61 @@
-import express from "express";
-import dbConnection  from "./database/dbConnection.js";
-import jobRouter from "./routes/jobRoutes.js";
-import userRouter from "./routes/userRoutes.js";
-import applicationRouter from "./routes/applicationRoutes.js";
-import { config } from "dotenv";
-import cors from "cors";
-import { errorMiddleware } from "./middlewares/error.js";
-import cookieParser from "cookie-parser";
-import fileUpload from "express-fileupload";
+// import express from "express";
+// import { config } from "dotenv";
+// import cors from "cors";
+// import cookieParser from "cookie-parser";
+// import fileUpload from "express-fileupload";
 
-const app = express();
-config({ path: "./config/config.env" });
+// import dbConnection from "./database/dbConnection.js";
+// import jobRouter from "./routes/jobRoutes.js";
+// import userRouter from "./routes/userRoutes.js";
+// import applicationRouter from "./routes/applicationRoutes.js";
+// import { errorMiddleware } from "./middlewares/error.js";
 
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL],
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
-  })
-);
+// // Load environment variables
+// config({ path: "./config/config.env" });
 
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// const app = express();
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/job", jobRouter);
-app.use("/api/v1/application", applicationRouter);
-dbConnection();
+// // ✅ Configure CORS properly
+// const allowedOrigins = [process.env.FRONTEND_URL];
 
-app.use(errorMiddleware);
-export default app;
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+// // ✅ Handle preflight requests
+// app.options("*", cors());
+
+// // ✅ Middlewares
+// app.use(cookieParser());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// app.use(
+//   fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: "/tmp/",
+//   })
+// );
+
+// // ✅ Routes
+// app.use("/api/v1/user", userRouter);
+// app.use("/api/v1/job", jobRouter);
+// app.use("/api/v1/application", applicationRouter);
+
+// // ✅ Connect to database
+// dbConnection();
+
+// // ✅ Error handler
+// app.use(errorMiddleware);
+
+// export default app;

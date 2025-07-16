@@ -39,8 +39,12 @@ const Register = () => {
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const message =
+        error.response?.data?.message || "Something went wrong. Please try again.";
+      toast.error(message);
+      console.error("Register error:", error); // helpful for debugging
     }
+    
   };
 
   if(isAuthorized){
