@@ -5,31 +5,24 @@ import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import cloudinary from "cloudinary";
 
-// Import custom modules
+// ✅ Custom modules
 import dbConnection from "./database/dbConnection.js";
 import jobRouter from "./routes/jobRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import applicationRouter from "./routes/applicationRoutes.js";
 import { errorMiddleware } from "./middlewares/error.js";
 
-// ✅ Load .env variables
+// ✅ Load environment variables
 config({ path: "./config/config.env" });
 
 // ✅ Initialize express app
 const app = express();
 
-// ✅ Connect to database
-dbConnection();
-
-// ✅ Cloudinary configuration
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 // ✅ CORS configuration
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://job-portal-2-zjz5.onrender.com", // ✅ Add your production frontend URL
+];
 
 app.use(
   cors({
@@ -40,19 +33,18 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ Handle preflight (OPTIONS) requests
-app.options("*", cors());
-
-// ✅ Core Middlewares
+// ✅ Core middlewares
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ✅ File upload middleware
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -60,7 +52,17 @@ app.use(
   })
 );
 
-// ✅ Routes
+// ✅ Connect to MongoDB
+dbConnection();
+
+// ✅ Cloudinary configuration
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// ✅ API routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
