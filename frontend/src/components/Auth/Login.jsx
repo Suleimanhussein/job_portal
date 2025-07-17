@@ -16,9 +16,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
+        "https://job-portal-1-twqg.onrender.com/api/v1/user/login",
         { email, password, role },
         {
           headers: {
@@ -27,15 +28,19 @@ const Login = () => {
           withCredentials: true,
         }
       );
+
       toast.success(data.message);
       setEmail("");
       setPassword("");
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error?.response?.data?.message || "Login failed";
+      toast.error(errorMessage);
+      console.error("Login error:", error);
     }
   };
+  
 
   if(isAuthorized){
     return <Navigate to={'/'}/>

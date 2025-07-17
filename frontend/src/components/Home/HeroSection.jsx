@@ -30,7 +30,7 @@ const HeroSection = () => {
   ];
   return (
     <>
-      <div className="heroSection">
+      <div className="heroSection bg-red-500">
         <div className="container">
           <div className="title">
             <h1>Find a job that suits</h1>

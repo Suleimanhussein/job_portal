@@ -22,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/v1/user/register",
+        "https://job-portal-1-twqg.onrender.com/api/v1/user/register",
         { name, phone, email, role, password },
         {
           headers: {
@@ -44,11 +44,11 @@ const Register = () => {
       toast.error(message);
       console.error("Register error:", error); // helpful for debugging
     }
-    
+
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to={'/'} />
   }
 
 
